@@ -55,7 +55,7 @@
 	
 	function wpip_download_profile() {
 		$file = trim($_GET['download']);
-		$file = WP_PLUGIN_DIR . '/wpip/profiles/' . $file;
+		$file = WP_PLUGIN_DIR . '/install-profiles/profiles/' . $file;
 
 		if (file_exists($file)) {
 			header('Content-Description: File Transfer');
@@ -78,7 +78,7 @@
 		// add check for '.profile' in filename
 		$newFile = $_FILES['importedFile']['tmp_name'];
 		$newFileName = $_FILES['importedFile']['name'];
-		$uploadDir = WP_PLUGIN_DIR . '/wpip/profiles/' . $newFileName;
+		$uploadDir = WP_PLUGIN_DIR . '/install-profiles/profiles/' . $newFileName;
 		$moved = move_uploaded_file($newFile,$uploadDir);
 		
 		if ( $moved ) { ?>
