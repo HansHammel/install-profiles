@@ -15,7 +15,7 @@
 		
 		$profileName = str_replace(' ', '-', $profileName);
 		
-		$newProfile = fopen(WP_PLUGIN_DIR . '/wpip/profiles/' . $profileName,"w"); 
+		$newProfile = fopen(WP_PLUGIN_DIR . '/install-profiles/profiles/' . $profileName,"w"); 
 		$written =  fwrite($newProfile, $lines);
 
 		fclose($newProfile);

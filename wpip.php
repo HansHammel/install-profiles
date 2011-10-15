@@ -32,7 +32,7 @@ Copyright 2011    (email : jon@ancillaryfactory.com)
 $plugin = plugin_basename(__FILE__); 
 
 
-require(WP_PLUGIN_DIR . '/wpip/includes/process-profiles.php');
+require(WP_PLUGIN_DIR . '/install-profiles/includes/process-profiles.php');
 
 
 function wpip_installation_profile_admin_actions() {
@@ -80,11 +80,11 @@ if ( isset($_POST['downloadPlugins'] ) ) {
 function wpip_installation_profile_admin() { 
 
 	// read data from default profile
-	$readDefaults = fopen(WP_PLUGIN_DIR . '/wpip/profiles/default.profile',"r");
-	$defaultLines = fread($readDefaults, filesize(WP_PLUGIN_DIR . '/wpip/profiles/default.profile'));
+	$readDefaults = fopen(WP_PLUGIN_DIR . '/install-profiles/profiles/default.profile',"r");
+	$defaultLines = fread($readDefaults, filesize(WP_PLUGIN_DIR . '/install-profiles/profiles/default.profile'));
 	fclose($readDefaults);
 	
-	$dir = WP_PLUGIN_DIR . '/wpip/profiles';
+	$dir = WP_PLUGIN_DIR . '/install-profiles/profiles';
 	$profilesList = scandir($dir);
 	
 ?>
