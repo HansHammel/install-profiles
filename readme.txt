@@ -8,8 +8,8 @@ Author URI: http://www.ancillaryfactory.com
 Author: Jon Schwab
 Requires at least: 3.0
 Tested up to: 3.2
-Stable tag: 0.75
-Version: 0.75
+Stable tag: 0.8
+Version: 0.8
 
 Download collections of plugins automatically from the Wordpress plugin directory.
 

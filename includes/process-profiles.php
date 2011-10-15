@@ -149,7 +149,7 @@
 			} // end foreach  ?>
 			</ul>		
 			<p style="margin-top:20px;font-weight:bold">
-				<?php print '<a href="' . admin_url('plugins.php') . '">Visit plugins page</a>'; ?>
+				<?php print '<a href="' . admin_url('plugins.php?plugin_status=inactive') . '">Visit plugins page</a>'; ?>
 			</p>
 			</div>
 		<?php } // end if isset 
