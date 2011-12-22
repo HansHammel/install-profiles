@@ -181,3 +181,42 @@
 		<?php } // end if isset 
 		
 	}
+	
+	/////////////////////////////////////////////////////
+	
+	function wpip_import_from_wpip_api() {
+		$apiUserName = mysql_real_escape_string($_POST['apiUserName']);
+		
+		$wpipApiURL = 'http://plugins.ancillaryfactory.com/api/user/'.$apiUserName;
+		$apiProfileData = simplexml_load_file($wpipApiURL);
+		
+		$profileCount = count($apiProfileData->profile);
+		
+		$i = 0;
+		while ( $i < $profileCount ) { 
+			unset($importedProfilePlugins);
+			
+			$importedProfileName = $apiProfileData->profile[$i]->name;
+			$importedFileName = $importedProfileName . '.profile';
+		
+			$plugins =  $apiProfileData->profile[$i]->plugins->plugin; 
+			foreach ( $plugins as $plugin ) { 
+				if ( !empty($plugin) ) {
+					$importedProfilePlugins .= trim($plugin) . PHP_EOL;
+				} 
+			} // end foreach
+		
+			file_put_contents(WP_PLUGIN_DIR . '/install-profiles/profiles/' . $importedFileName,$importedProfilePlugins);	
+			$i++;
+		}  // end while ?>
+		
+		<div class="updated">
+			<p>Imported <?php print $profileCount; ?>
+				<?php if ( $profileCount == 1 ) {
+					echo ' profile ';
+				} else {
+					echo ' profiles ';
+				} ?>
+			from <?php print $apiUserName;?>.</p>
+		</div>
+	<?php } ?>
