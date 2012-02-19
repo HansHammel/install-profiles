@@ -8,8 +8,8 @@ Author URI: http://www.ancillaryfactory.com
 Author: Jon Schwab
 Requires at least: 3.1
 Tested up to: 3.3
-Stable tag: 2.5
-Version: 2.5
+Stable tag: 2.5.1
+Version: 2.5.1
 
 Download custom collections of plugins automatically from the WordPress plugin directory.
 
@@ -41,6 +41,7 @@ See Install Profiles in action: [http://www.youtube.com/watch?v=W-mBhPA1XGA](htt
 
 * Major security enhancements - Thanks, Julio!
 * When downloading a profile of the current site, you can now choose from a list of all plugins, both active and inactive. Great idea, Marikamitsos!
+* Bugfixes for Windows hosting environments
 
 = 2.0 =
 
@@ -62,6 +63,7 @@ See Install Profiles in action: [http://www.youtube.com/watch?v=W-mBhPA1XGA](htt
 = 2.5 =
 
 Upgrade STRONGLY recommended to fix several security vulnerabilities
+Critical fixes for Windows hosting environments
 
 == Other Notes ==
 

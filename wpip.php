@@ -4,7 +4,7 @@
 Plugin Name: Installation Profiles
 Plugin URI: https://github.com/ancillaryfactory/WP-Installation-Profiles-Plugin
 Description: Download collections of plugins. Go to Plugins -> Bulk Install Profiles
-Version: 2.5
+Version: 2.5.1
 Author: Jon Schwab
 Author URI: http://www.ancillaryfactory.com
 License: GPL2
@@ -33,7 +33,7 @@ $plugin = plugin_basename(__FILE__);
 
 
 require(WP_PLUGIN_DIR . '/install-profiles/includes/process-profiles.php');
-require(ABSPATH . '/wp-admin/includes/plugin.php');
+
 
 function wpip_installation_profile_admin_actions() {
 	if (current_user_can('activate_plugins')) {
@@ -141,9 +141,18 @@ function wpip_installation_profile_admin() {
 		
 		<h4>Download profiles:</h4>
 		
+		<?php  
+			if ( wpip_is_windows() ) {
+				$pattern = '(txt$)';
+			} else {
+				$pattern = '(profile$)';
+			}
+		
+		 ?>
+		
 		<ul>
 		<?php foreach ($profilesList as $profileFile) { 
-			if ( preg_match( '(profile$)', $profileFile) ) { 
+			if ( preg_match( $pattern, $profileFile) ) { 
 				$nameLength = stripos($profileFile, '.');
 				$name = substr($profileFile,0,$nameLength);?>
 				<li>
@@ -156,7 +165,7 @@ function wpip_installation_profile_admin() {
 		
 		<?php 
 		$siteName = str_replace(' ', '-', get_bloginfo( 'name' ));
-		$currentSiteProfile = $siteName . '.profile';
+		// $currentSiteProfile = $siteName . '.profile';
 		$activePlugins = get_option('active_plugins');
 	?>
 	
@@ -173,11 +182,22 @@ function wpip_installation_profile_admin() {
 <form method="post" action="admin.php?page=installation_profiles" id="profileForm">
 		<p>
 		
+		<?php  
+			if ( wpip_is_windows() ) {
+				$pattern = '(txt$)';
+			} else {
+				$pattern = '(profile$)';
+			}
+		
+		 ?>
+		
+		
+		
 		<strong>Choose a profile:</strong><br/>
 		<select id="profileFilename" name="profileFilename">
 			<?php 
 			foreach ( $profilesList as $profileFile ) {
-				if ( preg_match( '(profile$)', $profileFile) ) {
+				if ( preg_match( $pattern, $profileFile) ) {
 					$nameLength = stripos($profileFile, '.');
 					$name = substr($profileFile,0,$nameLength);
 					echo '<option value="' . $profileFile . '">' . esc_attr($name) . '</option>';

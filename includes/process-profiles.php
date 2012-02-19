@@ -6,9 +6,15 @@
 	$lines = ($_POST['pluginNames']);
 	$linesArray = explode("\n", $lines);
 		
+		if ( wpip_is_windows() ) {
+			$validExtension = '.txt';
+		} else {
+			$validExtension = '.profile';
+		}
+		
 		// checks for new filename or saves over existing file
 		if ( !empty($_POST['profileName']) ) {
-			$profileName = esc_attr($_POST['profileName']) . '.profile';
+			$profileName = esc_attr($_POST['profileName']) . $validExtension;
 		} else {
 			$profileName = esc_attr($_POST['profileFilename']);
 		}
@@ -60,7 +66,14 @@ function wpip_download_profile() {
 		$file = trim(urldecode($_GET['download']));
 		$fileExtension = end(explode('.', $file));
 		
-		if ( !validate_file($file) && $fileExtension == 'profile' ) {
+		if ( wpip_is_windows() ) {
+			$validExtension = 'txt';
+		} else {
+			$validExtension = 'profile';
+		}
+	
+		
+		if ( !validate_file($file) && $fileExtension == $validExtension ) {
 			$file = WP_PLUGIN_DIR . '/install-profiles/profiles/' . $file;
 			
 	
@@ -93,7 +106,18 @@ function wpip_download_profile() {
 		// check if file ends in .profile
 		$fileExtension = end(explode('.', $newFileName));
 		
-		if ( $fileExtension == 'profile' && wp_verify_nonce($_POST['wpip_upload'],'upload_profile') ) {
+		if ( wpip_is_windows() ) {
+			$validExtension = 'txt';
+		} else {
+			$validExtension = 'profile';
+		}
+		
+		if ( $fileExtension == $validExtension ) {
+			$extensionValid = true;
+		}
+		
+		
+		if ( $extensionValid && wp_verify_nonce($_POST['wpip_upload'],'upload_profile') ) {
 			$moved = move_uploaded_file($newFile,$uploadDir);
 		}
 		
@@ -105,6 +129,7 @@ function wpip_download_profile() {
 		<?php }	else { ?>
 			<div class="error">
 				<p>Couldn't import <strong><?php print esc_attr($newFileName); ?></strong>. </p>
+				<p>Valid extension: <?php echo $validExtension;  ?></p>
 			</div>
 		<?php }
 	}
@@ -198,8 +223,13 @@ function wpip_download_profile() {
 				unset($importedProfilePlugins);
 				
 				$importedProfileName = $apiProfileData->profile[$i]->name;
-				$importedFileName = $importedProfileName . '.profile';
-			
+				
+				if ( wpip_is_windows() ) {
+					$importedFileName = sanitize_title($importedProfileName) . '.txt';
+				} else {
+					$importedFileName = $importedProfileName . '.profile';
+				}
+				
 				$plugins =  $apiProfileData->profile[$i]->plugins->plugin; 
 				foreach ( $plugins as $plugin ) { 
 					if ( !empty($plugin) ) {
@@ -286,7 +316,12 @@ function wpip_choose_plugins_to_save() { ?>
 
 function wpip_build_custom_profile() {
 	$profileName = sanitize_title($_POST['profileName'], get_bloginfo( 'name' ));	
-	$profileName = str_replace(' ', '-', $profileName) . '.profile';
+	
+	if ( wpip_is_windows()  ) {
+		$profileName = str_replace(' ', '-', $profileName) . '.txt';
+	} else {
+		$profileName = str_replace(' ', '-', $profileName) . '.profile';
+	}
 	
 	if (!validate_file($profileName) && wp_verify_nonce($_POST['wpip_custom'],'build_custom_profile')) { // false means the file validates
 		$fileContents = '';
@@ -338,3 +373,14 @@ function wpip_build_custom_profile() {
 	} // end check for validate_file()
 }
 
+
+// Checks for Windows server to change .profile to .txt extension
+// IIS will not serve .profile files without extra configuration
+function wpip_is_windows() {
+	$pos = strpos($_SERVER['SERVER_SOFTWARE'],'Microsoft');	
+	if ( $pos === false ) {
+		return false;
+	} else {
+		return true;
+	}
+}
