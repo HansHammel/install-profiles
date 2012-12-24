@@ -1,11 +1,20 @@
+.plugins_page_installation_profiles div.updated {
+	clear:both;
+}
+
+-moz-placeholder {
+	color:#d3d3d3;
+}
+
+
 #downloadSuccessList {background:#A6F29F;margin-bottom: 30px;}
 
-#wpipFormWrapper {margin-top: 30px;padding: 10px 50px 0px;width:745px;}
+/*#wpipFormWrapper {margin-top: 30px;padding: 10px 50px 0px;width:745px;}*/
 
 #pluginNames, #profileName {border:1px solid #999;padding:5px}
 
-#uploadWrapper {border-left: 1px solid #D7D7D7;float: right;min-height: 600px;padding:20px 66px;}
-#downloadWrapper {padding-top:30px;border-top:solid 1px #999;margin-top:15px}
+ /* #uploadWrapper {border-left: 1px solid #D7D7D7;float: right;min-height: 600px;padding:20px 66px;} */
+/*#downloadWrapper {margin-top:15px;}*/
 
 #importFormWrapper {margin-bottom:40px;overflow:hidden}
 
@@ -18,7 +27,7 @@
 
 #wpipHelp {box-shadow: 1px 1px 10px #D8D8D8;margin-top: 20px;padding: 5px 0 5px 20px;}
 
-#wpipApiImport {margin-bottom:20px;border-bottom: 1px solid #999999;padding-bottom:20px}
+#wpipApiImport {margin-bottom:20px;padding-bottom:1px}
 
 #pluginCheckboxForm {background:#dcdcdc;padding:40px;width:500px;height:450px;border-radius:10px;}
 #checkboxContainer {overflow-y:scroll;height:300px;margin-bottom:30px;}
@@ -26,6 +35,17 @@
 .modalHeadline {color:#666;font-size: 14px;padding-bottom:6px;}
 input.largeInput {padding:10px;font-size:14px;width:300px;}
 .pluginCheckbox {padding: 8px 4px;}
+
+#apiUserName {padding:5px;background:#E4E4E4;}
+
+/* add screen width less than 730px, make tabs to go below title */
+@media screen and (max-width: 730px){
+	.wrap h2 {float:none !important;}
+	ul.tabs li {top:0 !important;}
+}
+
+#screen-meta {z-index:1000;}
+
 
 
 /* #Tabs (activate in tabs.js)
@@ -41,7 +61,10 @@ input.largeInput {padding:10px;font-size:14px;width:300px;}
 		height: 30px;
 		padding: 0;
 		float: left;
-		margin-bottom: 0; }
+		margin-bottom: 0;
+		position:relative;
+		top:11px;
+		 }
 	ul.tabs li a {
 		display: block;
 		text-decoration: none;
