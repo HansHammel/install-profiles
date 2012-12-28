@@ -6,14 +6,13 @@ Plugin Name: Installation Profiles
 Plugin URI: http://plugins.ancilaryfactory.com
 Description: Download collections of plugins. Go to Plugins -> Bulk Install Profiles
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=GC8T5GGQ4AWSA
-Version: 3.0
+Version: 3.1
 Author: Jon Schwab
 Author URI: http://www.ancillaryfactory.com
 License: GPL2
 
 
 Copyright 2012    (email : jon@ancillaryfactory.com)
-
 
 
   This program is free software; you can redistribute it and/or modify
@@ -220,10 +219,10 @@ function wpip_installation_profile_admin() {
 
  <div id="icon-tools" class="icon32" style="float:left"></div>
 
-  <h2 style="margin-bottom: 12px;border-bottom:solid 1px #e4e4e4;"><?php _e('Bulk Install Profiles','WPIP')?>
+  <h2 style="margin-bottom: 12px;border-bottom:solid 1px #e4e4e4;position:relative"><?php _e('Bulk Install Profiles','WPIP')?>
 
       <!-- tabs -->
-      <ul class="tabs nav-tab-wrapper" style="position: absolute; top: 5px; left: 258px;">
+      <ul class="tabs nav-tab-wrapper" style="position: absolute; top: 1px; left: 258px;">
         <!-- Give href an ID value of corresponding "tabs-content" <li>s -->
         <li><a class="active nav-tab" href="#download"><?php _e('Download Plugins','WPIP');?></a></li>
         <li><a href="#import" class="nav-tab"><?php _e('Import Profiles','WPIP')?></a></li>
@@ -327,7 +326,7 @@ function wpip_installation_profile_admin() {
         <!-- <strong>Import new profile: </strong><br/> -->
         <input type="file" name="importedFile" />
         <?php wp_nonce_field('upload_profile','wpip_upload'); ?>
-        <input type="submit" name="importSubmit" value="<?php _e('Upload','WPIP') ?>" />
+        <input type="submit" class="button-primary" name="importSubmit" value="<?php _e('Upload','WPIP') ?>" />
       </p>
 
     </form>
@@ -381,7 +380,7 @@ function wpip_installation_profile_admin() {
   
 
   <p style="margin-top:30px">
-    <a id="choosePluginsButton" style="padding:5px" href="#" class="button">
+    <a id="choosePluginsButton" href="#" class="button">
       <?php _e('Create a custom profile from this site')?> (<?php print count(get_plugins());?> plugins)
     </a>
   </p>
