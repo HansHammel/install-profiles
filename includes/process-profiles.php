@@ -309,7 +309,7 @@ function wpip_download_profile() {
 					if ( !empty($pluginURL) ) {
 						$path_parts = pathinfo($pluginURL);
 						$filename = $path_parts['filename'] . '.' . $path_parts['extension'];
-						$path = $filename;
+						$path = plugin_dir_path(__FILE__) . $filename;
 
 						$response = wp_remote_get($pluginURL);
 
@@ -320,12 +320,14 @@ function wpip_download_profile() {
 						// $data = curl_exec($ch);
 						// curl_close($ch);
 						
+						
+						// place downloaded plugin .ZIP in the WPIP folder before unzipping
 						$downloadTest = file_put_contents($path, $response['body']);
 						
 
 						// extracts and deletes zip file
 						$zip = new ZipArchive;
-						if ($zip->open($filename) === TRUE) {
+						if ($zip->open($path) === TRUE) {
 							$zip->extractTo(WP_PLUGIN_DIR);
 							$zip->close();
 							//echo 'ok';
@@ -387,31 +389,16 @@ function wpip_download_profile() {
 				$plugins =  $apiProfileData->profile[$i]->plugins->plugin; 
 
 				foreach ( $plugins as $plugin ) { 
-
 					if ( !empty($plugin) ) {
-
 						$importedProfilePlugins .= trim($plugin) . PHP_EOL;
-
 					} 
-
-
 
 				} // end foreach
 
-
-
 				file_put_contents(WP_PLUGIN_DIR . '/install-profiles/profiles/' . $importedFileName,$importedProfilePlugins);	
 
-
-
 				$i++;
-
-
-
 			}  // end while 
-
-
-
 		} // end nonce check	
 
 
@@ -429,40 +416,16 @@ function wpip_download_profile() {
 
 
 		<div class="updated below-h2">
-
-
-
 			<p>Imported <?php print $profileCount; ?>
-
-
-
 				<?php if ( $profileCount == 1 ) {
-
 					echo ' profile ';
-
 				} else {
-
 					echo ' profiles ';
-
 				} ?>
 
-
-
 			from <?php print esc_attr($apiUserName);?>.</p>
-
 		</div>
-
-
-
 	<?php } 
-
-
-
-
-
-
-
-
 
 
 
@@ -471,90 +434,45 @@ function wpip_choose_plugins_to_save() { ?>
 
 
 	<form method="post" action="" id="pluginCheckboxForm" style="display: none">
-
 	<a href="#" class="simplemodal-close" style="float:right;text-decoration: none;font-weight: bold;color:#000;font-size:16px">X</a>
 
-
-
 	<div style="margin-bottom:30px">
-
 		<label class="modalHeadline">Save profile as: </label>
-
 		<input class="largeInput" type="text" name="profileName" value="<?php echo str_replace(' ', '-', get_bloginfo( 'name' ));?>" required="required"/> 
-
 	</div>
 
 
-
 	<p><strong>Include the following plugins:</strong>
-
 		<span style="margin-left: 150px"><a class="button" id="wpip_check_all" href="#">Check all</a>&nbsp;&nbsp;<a class="button" href="#" id="wpip_clear_all">Uncheck all</a></span>
-
 	</p>
-
-
-
 
 
 	<div id="checkboxContainer">
 
-
-
-	
-
-
-
 	<?php 
 
 		$i = 0;
-
 		$plugins = get_plugins();
-
 		$slugs = array_keys($plugins);
-
-
 
 		foreach ($plugins as $plugin) { 
 
-
-
 	     	$slug = array_keys($plugin); 
-
 			$slugPath = $slugs[$i++]; 
 
-
-
 	 		// use the folder name as the slug
-
-
-
 	 		$arr = explode("/", $slugPath, 2);
-
 	  		$slug = $arr[0]; 
 
-
-
 			// no need to add WPIP to a profile!
-
-
-
 			if ($slug == 'install-profiles'){continue;}
 
-
-
 			// skip over plugins that aren't in folders
-
 			$pos = strpos($slug, '.php');
 
-
-
 			if ($pos) {
-
 				continue;
-
 			}
-
-
 
 			?>
 
@@ -565,32 +483,17 @@ function wpip_choose_plugins_to_save() { ?>
 				<input class="pluginCheckbox" name="currentSlugs[]" type="checkbox" 
 
 					<?php if (is_plugin_active($slugPath)) { ?>
-
 						checked="checked"
-
 					<?php } ?>
 
 					value="<?php echo esc_attr($slug); ?>"/>
 
-
-
 				<?php echo esc_attr($plugin['Name']);?>
 
-
-
 				<br/>
-
 			</div>
 
-
-
 		<?php } ?>
-
-
-
-	
-
-
 
 		</div> <!-- end #checkboxContainer-->
 
@@ -598,70 +501,31 @@ function wpip_choose_plugins_to_save() { ?>
 
 	<input name="customProfileSubmit" type="submit" class="button-primary" value="Save and Download" style="float:right"/>
 
-
-
 	</form>
-
-
 
 <?php }
 
 
 
 
-
-
-
-
-
-
-
 function wpip_build_custom_profile() {
-
-
 
 	$profileName = sanitize_title($_POST['profileName'], get_bloginfo( 'name' ));	
 
-
-
-	
-
-
-
 	if ( wpip_is_windows()  ) {
-
 		$profileName = str_replace(' ', '-', $profileName) . '.txt';
-
 	} else {
-
 		$profileName = str_replace(' ', '-', $profileName) . '.profile';
-
 	}
 
-
-
-	
-
-
-
 	if (!validate_file($profileName) && wp_verify_nonce($_POST['wpip_custom'],'build_custom_profile')) { // false means the file validates
-
 		$fileContents = '';
-
-
 
 		$currentSlugs = esc_attr($_POST['currentSlugs']);
 
-
-
 		// assemble the file contents from the $_POST checkbox array
-
-
-
 		foreach ($currentSlugs as $slug) {	
-
 			$fileContents .= $slug . PHP_EOL;
-
 		}
 
 
