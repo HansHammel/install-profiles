@@ -3,16 +3,16 @@
 /*
 
 Plugin Name: Installation Profiles
-Plugin URI: http://plugins.ancilaryfactory.com
+Plugin URI: http://plugins.ancillaryfactory.com
 Description: Download collections of plugins. Go to Plugins -> Bulk Install Profiles
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=GC8T5GGQ4AWSA
-Version: 3.4
+Version: 3.4.1
 Author: Jon Schwab
 Author URI: http://www.ancillaryfactory.com
 License: GPL2
 
 
-Copyright 2012    (email : jon@ancillaryfactory.com)
+Copyright 2013   (email : jon@ancillaryfactory.com)
 
 
   This program is free software; you can redistribute it and/or modify

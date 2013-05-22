@@ -9,8 +9,8 @@ Author URI: http://www.ancillaryfactory.com
 Author: Jon Schwab
 Requires at least: 3.1
 Tested up to: 3.6
-Stable tag: 3.4
-Version: 3.4
+Stable tag: 3.4.1
+Version: 3.4.1
 
 Download custom collections of plugins automatically from the WordPress plugin directory.
 
@@ -37,6 +37,9 @@ See Install Profiles in action: [http://www.youtube.com/watch?v=W-mBhPA1XGA](htt
 3. Import online profiles with your WPIP username
 
 == Changelog ==
+= 3.4.1 =
+Readme correction. Thanks, Almaz!
+
 = 3.4 =
 
 * UPDATE STRONGLY RECOMMENDED: Now supports Filesystem API for compatibility with multiple hosting environments
